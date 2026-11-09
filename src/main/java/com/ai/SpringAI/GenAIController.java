@@ -31,13 +31,14 @@ public class GenAIController {
     }
 
     @GetMapping("/generate-image")
-    public void generateImages(HttpServletResponse response, @RequestParam String prompt) throws IOException {
-        ImageResponse imageResponse = imageService.generateImage(prompt,
-                OpenAiImageOptions.builder()
-                        .quality("hd")
-                        .n(1)
-                        .height(1024)
-                        .width(1024).build());
+    public void generateImages(HttpServletResponse response,
+                               @RequestParam String prompt,
+                               @RequestParam(defaultValue = "hd") String quality,
+                               @RequestParam(defaultValue = "1") int n,
+                               @RequestParam(defaultValue = "1024") int width,
+                               @RequestParam(defaultValue = "1024") int height) throws IOException {
+
+        ImageResponse imageResponse = imageService.generateImage(prompt, quality, n, width, height);
         String imageUrl = imageResponse.getResult().getOutput().getUrl();
         response.sendRedirect(imageUrl);
     }

@@ -15,9 +15,14 @@ public class ImageService {
         this.openAiImageModel = openAiImageModel;
     }
 
-    public ImageResponse generateImage(String prompt, OpenAiImageOptions hd){
+    public ImageResponse generateImage(String prompt, String quality, int n, int width, int height){
         ImageResponse imageResponse = openAiImageModel.call(
-                new ImagePrompt(prompt)
+                new ImagePrompt(prompt,
+                        OpenAiImageOptions.builder()
+                                .quality(quality)
+                                .n(n)
+                                .height(height)
+                                .width(width).build())
         );
         return imageResponse;
     }
