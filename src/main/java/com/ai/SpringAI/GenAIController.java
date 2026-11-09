@@ -2,6 +2,7 @@ package com.ai.SpringAI;
 
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.ai.image.ImageResponse;
+import org.springframework.ai.openai.OpenAiImageOptions;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -31,7 +32,12 @@ public class GenAIController {
 
     @GetMapping("/generate-image")
     public void generateImages(HttpServletResponse response, @RequestParam String prompt) throws IOException {
-        ImageResponse imageResponse = imageService.generateImage(prompt);
+        ImageResponse imageResponse = imageService.generateImage(prompt,
+                OpenAiImageOptions.builder()
+                        .quality("hd")
+                        .n(1)
+                        .height(1024)
+                        .width(1024).build());
         String imageUrl = imageResponse.getResult().getOutput().getUrl();
         response.sendRedirect(imageUrl);
     }

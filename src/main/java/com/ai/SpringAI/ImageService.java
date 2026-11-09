@@ -3,6 +3,7 @@ package com.ai.SpringAI;
 import org.springframework.ai.image.ImagePrompt;
 import org.springframework.ai.image.ImageResponse;
 import org.springframework.ai.openai.OpenAiImageModel;
+import org.springframework.ai.openai.OpenAiImageOptions;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -14,7 +15,7 @@ public class ImageService {
         this.openAiImageModel = openAiImageModel;
     }
 
-    public ImageResponse generateImage(String prompt){
+    public ImageResponse generateImage(String prompt, OpenAiImageOptions hd){
         ImageResponse imageResponse = openAiImageModel.call(
                 new ImagePrompt(prompt)
         );
