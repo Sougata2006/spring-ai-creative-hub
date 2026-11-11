@@ -14,12 +14,13 @@ The goal is to build a platform that makes everyday creative tasks easier throug
 
 - **AI Message Generation** – Generate AI-powered responses using natural language prompts.
 - **Configurable AI Responses** – Customize model options such as the AI model and maximum token limit.
+- **AI Image Generation** – Generate images using text prompts.
+- **Dynamic Image Generation Parameters** – Customize image quality, number of images, width and height.
 - **REST API Integration** – Expose AI functionality through Spring Boot REST endpoints.
 
 ### Upcoming
 
 - **Recipe Generation** – Generate recipes based on available ingredients and user preferences.
-- **Photo Generation** – Generate images using AI based on text prompts.
 
 ## Tech Stack
 
@@ -28,7 +29,7 @@ The goal is to build a platform that makes everyday creative tasks easier throug
 | Java | Backend programming language |
 | Spring Boot | Backend application framework |
 | Spring AI | Generative AI integration |
-| OpenAI API | AI-powered text generation |
+| OpenAI API | AI text and image generation |
 | Maven | Dependency management and build automation |
 
 ## Project Structure
@@ -39,6 +40,7 @@ src/
  │    ├── java/
  │    │    └── com/ai/SpringAI/
  │    │         ├── ChatService.java
+ │    │         ├── ImageService.java
  │    │         ├── GenAIController.java
  │    │         └── SpringAiApplication.java
  │    │
@@ -50,11 +52,11 @@ src/
 
 ## API Endpoints
 
-### AI Response Generation
+### 1. AI Response Generation
 
 Generate AI responses using a text prompt.
 
-### AI Response with Custom Options
+### 2. AI Response with Custom Options
 
 **Endpoint:** `/ask-ai-options`
 
@@ -72,7 +74,35 @@ Example:
 GET /ask-ai-options?prompt=Suggest a healthy breakfast
 ```
 
-The endpoint uses configurable model options for generating responses.
+Supports configurable model options such as model selection and maximum token limit.
+
+### 3. AI Image Generation
+
+Generate images based on user-provided text prompts.
+
+**Endpoint:** `/generate-image`
+
+**Method:** `GET`
+
+**Query Parameters:**
+
+| Parameter | Type | Default | Description |
+|---|---|---|---|
+| prompt | String | Required | Image generation prompt |
+| quality | String | hd | Generated image quality |
+| n | Integer | 1 | Number of images |
+| width | Integer | 1024 | Image width |
+| height | Integer | 1024 | Image height |
+
+Example:
+
+```http
+GET /generate-image?prompt=A futuristic city&quality=hd&n=1&width=1024&height=1024
+```
+
+The endpoint generates an image and redirects the client to the generated image URL.
+
+*Note: Available image options depend on the selected image model.*
 
 ## Getting Started
 
@@ -81,7 +111,7 @@ The endpoint uses configurable model options for generating responses.
 - Java JDK
 - Maven (or use the included Maven Wrapper)
 - IntelliJ IDEA or another Java IDE
-- An OpenAI API key
+- An OpenAI API key with available API credits
 
 ### Clone the Repository
 
@@ -93,10 +123,12 @@ cd spring-ai-creative-hub
 
 ### Configure API Key
 
-Set your OpenAI API key as an environment variable:
+Set your OpenAI API key as an environment variable.
 
-```text
-OPENAI_API_KEY=your_api_key
+**Windows PowerShell:**
+
+```powershell
+$env:OPENAI_API_KEY="your_api_key"
 ```
 
 Configure it in `application.properties`:
@@ -127,9 +159,16 @@ Using Maven Wrapper:
 
 **Backend – Phase 1 completed.**
 
-The initial Spring Boot backend setup and AI-powered text generation integration have been implemented.
+The initial Spring Boot backend setup and the following AI integrations have been implemented:
 
-Additional AI capabilities, including recipe and image generation, are planned for upcoming development phases.
+- AI-powered text generation with configurable model options.
+- AI-powered image generation.
+- Dynamic image generation parameters.
+- REST API endpoints for interacting with AI services.
+
+Recipe generation is planned for the next development phase.
+
+The project is being developed incrementally, with new features and documentation added as development progresses.
 
 ## Author
 
