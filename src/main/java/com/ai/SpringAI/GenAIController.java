@@ -14,10 +14,12 @@ public class GenAIController {
 
     private final ChatService chatService;
     private final ImageService imageService;
+    private final  RecipeService recipeService;
 
-    public GenAIController(ChatService chatService, ImageService imageService) {
+    public GenAIController(ChatService chatService, ImageService imageService, RecipeService recipeService) {
         this.chatService = chatService;
         this.imageService = imageService;
+        this.recipeService = recipeService;
     }
 
     @GetMapping("/ask-ai")
@@ -41,5 +43,13 @@ public class GenAIController {
         ImageResponse imageResponse = imageService.generateImage(prompt, quality, n, width, height);
         String imageUrl = imageResponse.getResult().getOutput().getUrl();
         response.sendRedirect(imageUrl);
+    }
+
+    @GetMapping("/recipe-creator")
+    public String recipeCreator(@RequestParam String ingredients,
+                              @RequestParam(defaultValue = "any") String cuisine,
+                              @RequestParam(defaultValue = "none") String dietaryRestrictions){
+
+        return recipeService.createRecipe(ingredients, cuisine, dietaryRestrictions);
     }
 }
